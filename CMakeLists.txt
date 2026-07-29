@@ -14,6 +14,10 @@ if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
         CACHE FILEPATH "vcpkg toolchain file")
 endif()
 
+enable_testing()
+
+# Prepare GTest library.
+find_package(GTest CONFIG REQUIRED)
 
 # Prepare fmt library.
 find_package(fmt CONFIG REQUIRED)
@@ -41,16 +45,31 @@ find_package(TBB CONFIG REQUIRED)
 # Prepare cppzmq library.
 find_package(cppzmq CONFIG REQUIRED)
 
-add_executable(Hello hello.cc)
-set_target_properties(Hello PROPERTIES
+add_executable(hello hello.cc)
+set_target_properties(hello PROPERTIES
     CXX_STANDARD 20
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS OFF
 )
+target_link_libraries(hello PRIVATE fmt::fmt)
+target_link_libraries(hello PRIVATE ${llvm_libs})
+target_link_libraries(hello PRIVATE ${clang_libs})
+target_link_libraries(hello PRIVATE TBB::tbb)
+target_link_libraries(hello PRIVATE cppzmq-static)
 
-target_link_libraries(Hello PRIVATE fmt::fmt)
-target_link_libraries(Hello PRIVATE ${llvm_libs})
-target_link_libraries(Hello PRIVATE ${clang_libs})
-target_link_libraries(Hello PRIVATE TBB::tbb)
-target_link_libraries(Hello PRIVATE cppzmq-static)
 
+add_executable(hello_test hello_test.cc)
+set_target_properties(hello_test PROPERTIES
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+)
+target_link_libraries(hello_test PRIVATE fmt::fmt)
+target_link_libraries(hello_test PRIVATE ${llvm_libs})
+target_link_libraries(hello_test PRIVATE ${clang_libs})
+target_link_libraries(hello_test PRIVATE TBB::tbb)
+target_link_libraries(hello_test PRIVATE cppzmq-static)
+target_link_libraries(hello_test PRIVATE GTest::gtest_main)
+
+# Add test to ctest.
+add_test(AllTests hello_test)

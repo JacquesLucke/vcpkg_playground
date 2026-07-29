@@ -3,6 +3,7 @@
     "fmt",
     "llvm",
     "tbb",
-    "cppzmq"
+    "cppzmq",
+    "gtest"
   ]
 }
