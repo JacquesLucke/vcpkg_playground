@@ -69,7 +69,7 @@ target_link_libraries(hello_test PRIVATE ${llvm_libs})
 target_link_libraries(hello_test PRIVATE ${clang_libs})
 target_link_libraries(hello_test PRIVATE TBB::tbb)
 target_link_libraries(hello_test PRIVATE cppzmq-static)
-target_link_libraries(hello_test PRIVATE GTest::gtest_main)
+target_link_libraries(hello_test PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main)
 
 # Add test to ctest.
 add_test(AllTests hello_test)
