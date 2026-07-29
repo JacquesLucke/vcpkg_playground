@@ -8,7 +8,8 @@
       "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-        "CMAKE_LINKER_TYPE": "MOLD"
+        "CMAKE_LINKER_TYPE": "MOLD",
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
       }
     },
     {
@@ -43,6 +44,13 @@
         {"type": "configure", "name": "release"},
         {"type": "build", "name": "release"}
 
+      ]
+    },
+    {
+      "name": "debug",
+      "steps": [
+        {"type": "configure", "name": "debug"},
+        {"type": "build", "name": "debug"}
       ]
     }
   ]

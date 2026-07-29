@@ -1,8 +1,7 @@
-#include <clang/Frontend/ASTUnit.h>
 #include <fmt/base.h>
 #include <fmt/core.h>
 
-#include <llvm/Support//TargetSelect.h>
+#include <llvm/Support/TargetSelect.h>
 #include <llvm/Support/CommandLine.h>
 #include <llvm/Support/ManagedStatic.h>
 
@@ -10,9 +9,13 @@
 #include <oneapi/tbb/parallel_for.h>
 #include <tbb/parallel_for.h>
 
+#include <clang/Frontend/ASTUnit.h>
 #include "clang/Frontend/CompilerInstance.h"
 
 #include <zmq.hpp>
+
+template<typename T>
+concept IsSmall = sizeof(T) <= sizeof(int);
 
 int main()
 {

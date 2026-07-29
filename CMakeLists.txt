@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
+project(hello_vcpkg)
 
 # Automatically download vcpkg if CMAKE_TOOLCHAIN_FILE isn't set
 if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
@@ -13,7 +14,6 @@ if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
         CACHE FILEPATH "vcpkg toolchain file")
 endif()
 
-project(hello_vcpkg)
 
 # Prepare fmt library.
 find_package(fmt CONFIG REQUIRED)
@@ -42,6 +42,11 @@ find_package(TBB CONFIG REQUIRED)
 find_package(cppzmq CONFIG REQUIRED)
 
 add_executable(Hello hello.cc)
+set_target_properties(Hello PROPERTIES
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+)
 
 target_link_libraries(Hello PRIVATE fmt::fmt)
 target_link_libraries(Hello PRIVATE ${llvm_libs})
