@@ -1,4 +1,3 @@
 ```
-cmake --preset release
-cmake --build --preset release
+cmake --workflow --preset release
 ```

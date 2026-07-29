@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 6,
   "configurePresets": [
     {
       "name": "base",
@@ -7,7 +7,8 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_LINKER_TYPE": "MOLD"
       }
     },
     {
@@ -33,6 +34,16 @@
     {
       "name": "release",
       "configurePreset": "release"
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "release",
+      "steps": [
+        {"type": "configure", "name": "release"},
+        {"type": "build", "name": "release"}
+
+      ]
     }
   ]
 }

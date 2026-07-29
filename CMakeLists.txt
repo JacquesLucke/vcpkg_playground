@@ -15,8 +15,33 @@ endif()
 
 project(hello_vcpkg)
 
+# Prepare fmt library.
 find_package(fmt CONFIG REQUIRED)
+
+# Prepare LLVM and Clang libraries.
+find_package(LLVM CONFIG REQUIRED)
+find_package(Clang CONFIG REQUIRED)
+list(APPEND CMAKE_MODULE_PATH "${LLVM_CMAKE_DIR}")
+include(HandleLLVMOptions)
+add_definitions(${LLVM_DEFINITIONS})
+llvm_map_components_to_libnames(llvm_libs Support native)
+set(clang_libs
+    clangAST
+    clangBasic
+    clangDriver
+    clangFrontend
+    clangLex
+    clangSerialization
+    clangTooling
+)
+
+# Prepare TBB library.
+find_package(TBB CONFIG REQUIRED)
 
 add_executable(Hello hello.cc)
 
 target_link_libraries(Hello PRIVATE fmt::fmt)
+target_link_libraries(Hello PRIVATE ${llvm_libs})
+target_link_libraries(Hello PRIVATE ${clang_libs})
+target_link_libraries(Hello PRIVATE TBB::tbb)
+
