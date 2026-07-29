@@ -38,10 +38,14 @@ set(clang_libs
 # Prepare TBB library.
 find_package(TBB CONFIG REQUIRED)
 
+# Prepare cppzmq library.
+find_package(cppzmq CONFIG REQUIRED)
+
 add_executable(Hello hello.cc)
 
 target_link_libraries(Hello PRIVATE fmt::fmt)
 target_link_libraries(Hello PRIVATE ${llvm_libs})
 target_link_libraries(Hello PRIVATE ${clang_libs})
 target_link_libraries(Hello PRIVATE TBB::tbb)
+target_link_libraries(Hello PRIVATE cppzmq-static)
 
