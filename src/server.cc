@@ -2,6 +2,8 @@
 #include <zmq.hpp>
 #include <zmq_addon.hpp>
 
+#include "common.hh"
+
 using namespace std::string_view_literals;
 
 int main() {
@@ -26,7 +28,14 @@ int main() {
     const std::string_view client_id = recv_parts[0].to_string_view();
     const std::string_view req_message = recv_parts[2].to_string_view();
 
-    fmt::print("Received request from {}: {}\n", client_id, req_message);
+    msgpack::object_handle oh =
+        msgpack::unpack(req_message.data(), req_message.size());
+    msgpack::object obj = oh.get();
+
+    MyData data;
+    obj.convert(data);
+
+    fmt::print("Received request from {}: {}\n", client_id, data);
 
     std::vector<zmq::message_t> reply_parts;
     reply_parts.push_back(std::move(recv_parts[0]));

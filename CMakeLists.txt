@@ -35,6 +35,9 @@ find_package(cppzmq CONFIG REQUIRED)
 # Prepare toml11 library.
 find_package(toml11 CONFIG REQUIRED)
 
+# Prepare msgpack library.
+find_package(msgpack-cxx CONFIG REQUIRED)
+
 add_executable(server ./src/server.cc)
 set_target_properties(server PROPERTIES
     CXX_STANDARD 20
@@ -43,6 +46,8 @@ set_target_properties(server PROPERTIES
 )
 target_link_libraries(server PRIVATE fmt::fmt)
 target_link_libraries(server PRIVATE cppzmq-static)
+target_link_libraries(server PRIVATE msgpack-cxx)
+target_compile_definitions(server PRIVATE MSGPACK_NO_BOOST)
 
 add_executable(client ./src/client.cc)
 set_target_properties(client PROPERTIES
@@ -52,6 +57,8 @@ set_target_properties(client PROPERTIES
 )
 target_link_libraries(client PRIVATE fmt::fmt)
 target_link_libraries(client PRIVATE cppzmq-static)
+target_link_libraries(client PRIVATE msgpack-cxx)
+target_compile_definitions(client PRIVATE MSGPACK_NO_BOOST)
 
 add_executable(hello ./src/hello.cc)
 set_target_properties(hello PROPERTIES
