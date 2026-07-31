@@ -35,6 +35,23 @@ find_package(cppzmq CONFIG REQUIRED)
 # Prepare toml11 library.
 find_package(toml11 CONFIG REQUIRED)
 
+add_executable(server ./src/server.cc)
+set_target_properties(server PROPERTIES
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+)
+target_link_libraries(server PRIVATE fmt::fmt)
+target_link_libraries(server PRIVATE cppzmq-static)
+
+add_executable(client ./src/client.cc)
+set_target_properties(client PROPERTIES
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+    CXX_EXTENSIONS OFF
+)
+target_link_libraries(client PRIVATE fmt::fmt)
+target_link_libraries(client PRIVATE cppzmq-static)
 
 add_executable(hello ./src/hello.cc)
 set_target_properties(hello PROPERTIES
@@ -48,7 +65,6 @@ target_link_libraries(hello PRIVATE ${clang_libs})
 target_link_libraries(hello PRIVATE TBB::tbb)
 target_link_libraries(hello PRIVATE cppzmq-static)
 target_link_libraries(hello PRIVATE toml11::toml11)
-
 
 add_executable(hello_test ./src/hello_test.cc)
 set_target_properties(hello_test PROPERTIES
