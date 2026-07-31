@@ -4,6 +4,7 @@
     "llvm",
     "tbb",
     "cppzmq",
-    "gtest"
+    "gtest",
+    "toml11"
   ]
 }

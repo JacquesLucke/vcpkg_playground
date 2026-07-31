@@ -32,6 +32,10 @@ find_package(TBB CONFIG REQUIRED)
 # Prepare cppzmq library.
 find_package(cppzmq CONFIG REQUIRED)
 
+# Prepare toml11 library.
+find_package(toml11 CONFIG REQUIRED)
+
+
 add_executable(hello ./src/hello.cc)
 set_target_properties(hello PROPERTIES
     CXX_STANDARD 20
@@ -43,6 +47,7 @@ target_link_libraries(hello PRIVATE ${llvm_libs})
 target_link_libraries(hello PRIVATE ${clang_libs})
 target_link_libraries(hello PRIVATE TBB::tbb)
 target_link_libraries(hello PRIVATE cppzmq-static)
+target_link_libraries(hello PRIVATE toml11::toml11)
 
 
 add_executable(hello_test ./src/hello_test.cc)
@@ -56,6 +61,7 @@ target_link_libraries(hello_test PRIVATE ${llvm_libs})
 target_link_libraries(hello_test PRIVATE ${clang_libs})
 target_link_libraries(hello_test PRIVATE TBB::tbb)
 target_link_libraries(hello_test PRIVATE cppzmq-static)
+target_link_libraries(hello PRIVATE toml11::toml11)
 target_link_libraries(hello_test PRIVATE GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main)
 
 # Add test to ctest.

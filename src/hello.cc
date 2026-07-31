@@ -14,6 +14,8 @@
 
 #include <zmq.hpp>
 
+#include <toml.hpp>
+
 template<typename T>
 concept IsSmall = sizeof(T) <= sizeof(int);
 
