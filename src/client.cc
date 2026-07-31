@@ -9,11 +9,15 @@ int main() {
 
   fmt::print("Connected to server at {}\n", endpoint);
 
-  socket.send(zmq::str_buffer("Hey"), zmq::send_flags::none);
+  for (int i = 0; i < 10; i++) {
+    socket.send(zmq::buffer(fmt::format("Hey {}", i)), zmq::send_flags::none);
 
-  zmq::message_t reply;
-  zmq::recv_result_t res = socket.recv(reply, zmq::recv_flags::none);
-  std::string reply_str{static_cast<char *>(reply.data()), reply.size()};
-  fmt::print("Received reply: {}\n", reply_str);
+    zmq::message_t reply;
+    zmq::recv_result_t res = socket.recv(reply, zmq::recv_flags::none);
+    if (!res) {
+      continue;
+    }
+    fmt::print("Received reply: {}\n", reply.to_string_view());
+  }
   return 0;
 }
